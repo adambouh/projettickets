@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+.app {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-title {
+    text-align: center;
+}
+
+.doors-page {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.page-title {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.page-description {
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.zone-selector {
+    margin-bottom: 20px;
+}
+
+.door-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.door {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.door-name {
+    font-weight: bold;
+}
+
+.frequency {
+    color: #f03434;
+}
+
+select {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+

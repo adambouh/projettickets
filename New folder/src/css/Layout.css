@@ -1,0 +1,22 @@
+/* src/Layout.css */
+.layout {
+    display: flex;
+  }
+  
+  .content {
+    margin-left: 200px; /* Adjust this if you change the sidebar width */
+    padding: 20px;
+    width: calc(100% - 200px); /* Adjust this if you change the sidebar width */
+  }
+  
+  .toggle-btn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1100;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  

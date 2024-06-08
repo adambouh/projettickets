@@ -16,9 +16,11 @@ function Login() {
         setValues(prev => ({ ...prev, [event.target.name]: event.target.value }));
     };
 
-    const handleLoginSuccess = (userId) => {
+    const handleLoginSuccess = (userId,role) => {
         // Store user ID in localStorage
         localStorage.setItem('userId', userId);
+        localStorage.setItem('role', role);
+
         // Redirect to WelcomeScreen
         navigate('/WelcomeScreen');
     };
@@ -34,7 +36,7 @@ function Login() {
             });
 
             setErrorMessage(response.data.message);
-            handleLoginSuccess(response.data.id); // Redirect to WelcomeScreen after successful login
+            handleLoginSuccess(response.data.id,response.data.role); // Redirect to WelcomeScreen after successful login
         } catch (error) {
             setErrorMessage('Login failed. Please check your username and password.');
         }

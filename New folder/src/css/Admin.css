@@ -1,0 +1,76 @@
+.admin-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .match-item, .stadium-item {
+    margin-bottom: 10px;
+  }
+  
+  .match-item button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input {
+    padding: 5px;
+    width: 100%;
+    max-width: 300px;
+  }
+  .match-list {
+    padding: 20px;
+  }
+  
+  .match-item {
+    cursor: pointer;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .match-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .match-detail {
+    padding: 20px;
+  }
+  
+  .match-detail form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .match-detail label {
+    margin-bottom: 10px;
+  }
+  
+  .match-detail button {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  button {
+    cursor: pointer;
+  }
+  
+  button:disabled {
+    cursor: not-allowed;
+  }
+  
+  
+  

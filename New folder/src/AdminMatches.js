@@ -26,10 +26,10 @@ function AdminMatches() {
       <h2>Match List</h2>
       <ul>
         {matches.map(match => (
-          <li key={match._id} className="match-item">
+          <li key={match._id} className="match-item" onClick={() => handleEditClick(match._id)}>
             <strong>{match.home_team_country} vs {match.away_team_country}</strong><br />
             Date: {new Date(match.date).toLocaleString()}<br />
-            <button onClick={() => handleEditClick(match._id)}>Edit</button>
+
           </li>
         ))}
       </ul>

@@ -21,6 +21,8 @@ import MyTickets from './MyTickets';
 import TicketDetail from './Ticket';
 import AdminMatches from './AdminMatches';
 import AdminStadiums from './AdminStadiums';
+import MatchDetail from './AdminMatch';
+import AdminStadiumDetail from './AdminStadium';
 
 export const RecoveryContext = createContext();
 
@@ -50,7 +52,8 @@ function App() {
         <Route path="/ticket/:ticketId" element={<Layout><TicketDetail /></Layout>} />
         <Route path="/Admin/matches" element={<Layout><AdminMatches /></Layout>} />
         <Route path="/Admin/stadiums" element={<Layout><AdminStadiums /></Layout>} />
-
+        <Route path="/admin/match/:matchId" element={<Layout><MatchDetail/></Layout>} />/admin/stadium/
+        <Route path="/admin/stadium/:stadiumId" element={<Layout><AdminStadiumDetail/></Layout>} />
        
       </Routes>
     </Router>

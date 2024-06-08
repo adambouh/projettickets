@@ -8,14 +8,21 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     e.preventDefault();
     toggleSidebar();
   };
+  const isAdmin= localStorage.getItem("role")=="admin";
   return (
     <div id="mySidenav" className={`sidenav ${isOpen ? 'open' : ''}`}>
       <a href="#" className="closebtn" onClick={handleCloseClick}>&times;</a>
       <Link to="/WelcomeScreen" onClick={toggleSidebar}>Home</Link>
       <Link to="/My-tickets" onClick={toggleSidebar}>My tickets</Link>
-      <Link to="/DoorsPage" onClick={toggleSidebar}>Doors</Link>
+      {isAdmin && (
+        <>
+          <Link to="/admin/stadiums" onClick={toggleSidebar}>Stadiums</Link>
+          <Link to="/admin/matches" onClick={toggleSidebar}>Matches</Link>
+        </>
+      )}
     </div>
   );
 };
-
+/*      <-- <Link to="/DoorsPage" onClick={toggleSidebar}>Doors</Link>-->
+*/
 export default Sidebar;

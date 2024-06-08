@@ -52,7 +52,7 @@ router.post('/login', async (req, res) => {
       const token = jwt.sign({ userId: user._id, username: user.username }, 'secret', { expiresIn: '1d' });
 
 
-      return res.status(200).json({ message: 'Success' ,token, id:user._id});
+      return res.status(200).json({ message: 'Success' ,token, id:user._id,role:user.role});
     } else {
       // Passwords do not match, return an error
       return res.status(401).json({ message: 'Authentication failed' });

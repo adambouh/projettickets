@@ -7,18 +7,20 @@ const jwt = require('jsonwebtoken');
 // Create a new user
 router.post('/', async (req, res) => {
   try {
-    // Check if required fields are present in the request body
-    if (!req.body.username || !req.body.password) {
-      return res.status(400).json({ message: 'Username and password are required' });
-    }
+  const { username, password } = req.body;
+  const existingUser = await User.findOne({ username });
 
-    const newUser = new User(req.body);
-    await newUser.save();
-    res.status(201).json(newUser);
-  } catch (error) {
-    console.error('Error creating user:', error);
-    res.status(400).json({ message: 'Error creating user' });
+  if (existingUser) {
+    return res.status(400).json({ message: 'Username already exists' });
   }
+
+  const newUser = new User({ username, password });
+  await newUser.save();
+  res.status(201).json({ message: 'User registered successfully' });
+} catch (error) {
+  console.error('Error creating user:', error);
+  res.status(400).json({ message: 'Error creating user' });
+}
 });
 
 

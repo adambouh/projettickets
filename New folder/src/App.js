@@ -35,7 +35,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<Layout><Login /></Layout>} />
-        <Route path='/singup' element={<Layout><Singup /></Layout>} />
+        <Route path='/signup' element={<Layout><Singup/></Layout>} />
         <Route path='/payement' element={             <Layout> <Payement setQrCode={setQrCode}/></Layout> } />
         <Route path='/ForgotPassword' element={ <Layout><ForgotPassword /></Layout>} />
         <Route path='/Matches' element={ <Layout> <Matches /></Layout>  } />

@@ -24,7 +24,7 @@ function Singup() {
     setErrors(validation(values)); // Assuming this sets the errors state correctly
 
     if (!errors.username && !errors.password && !errors.password2) {
-      axios.post('http://localhost:5000/api/user/', { username: values.username, password: values.password })
+      axios.post('http://localhost:5000/api/users/', { username: values.username, password: values.password })
         .then(res => {
           navigate('/');
         })

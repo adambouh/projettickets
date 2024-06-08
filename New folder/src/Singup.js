@@ -8,7 +8,7 @@ import validation from "./Singvalidation";
 function Singup() {
   const [errorMessage, setErrorMessage] = useState("");
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const [values, setValues] = useState({
     username: "",
     password: "",

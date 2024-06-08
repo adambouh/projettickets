@@ -42,7 +42,7 @@ function AdminStadiumDetail() {
   const handleAddCategory = () => {
     setFormData({
       ...formData,
-      categories: [...formData.categories, { _id: Date.now(), capacity: 0, price: 0 }],
+      categories: [...formData.categories, { id: Date.now(), capacity: 0, price: 0 }],
     });
   };
 

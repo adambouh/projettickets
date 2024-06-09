@@ -21,6 +21,11 @@ function Singup() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(values.username)) {
+        setErrorMessage('Please enter a valid email address.');
+        return;
+    }
     setErrors(validation(values)); // Assuming this sets the errors state correctly
 
     if (!errors.username && !errors.password && !errors.password2) {
@@ -43,12 +48,13 @@ function Singup() {
       <form className="signup-form" onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
         <div className="form-group">
-          <label htmlFor="username">Username</label>
+          <label htmlFor="username">Email</label>
           <input
-            type="text"
+            type="email"
             name='username'
-            placeholder="Enter your username"
+            placeholder="Enter your email"
             onChange={handleInput}
+            required
           />
           {errors.username && <span className="text-danger">{errors.username}</span>}
         </div>

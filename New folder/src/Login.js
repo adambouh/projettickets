@@ -27,6 +27,14 @@ function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        event.preventDefault();
+        
+        // Email validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(values.username)) {
+            setErrorMessage('Please enter a valid email address.');
+            return;
+        }
         try {
             const response = await axios.post('http://localhost:5000/api/users/login', {
                 username: values.username,
@@ -47,11 +55,11 @@ function Login() {
             <form className='login-form' onSubmit={handleSubmit}>
                 <h2>Sign In</h2>
                 <div className='form-group'>
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">Email</label>
                     <input
                         name='username'
-                        type="text"
-                        placeholder="Enter your Username"
+                        type="email"
+                        placeholder="Enter your mail"
                         value={values.username}
                         onChange={handleInput}
                     />

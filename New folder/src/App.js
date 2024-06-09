@@ -34,10 +34,10 @@ function App() {
     
     <Router>
       <Routes>
-        <Route path='/' element={<Layout><Login /></Layout>} />
-        <Route path='/signup' element={<Layout><Singup/></Layout>} />
+        <Route path='/' element={<Login />} />
+        <Route path='/signup' element={<Singup/>} />
         <Route path='/payement' element={             <Layout> <Payement setQrCode={setQrCode}/></Layout> } />
-        <Route path='/ForgotPassword' element={ <Layout><ForgotPassword /></Layout>} />
+        <Route path='/ForgotPassword' element={ <ForgotPassword />} />
         <Route path='/Matches' element={ <Layout> <Matches /></Layout>  } />
         <Route path='/Category' element={  <Layout><Category /> </Layout> } />
         <Route path='/Guest' element={ <Layout> <Guest /></Layout> } />

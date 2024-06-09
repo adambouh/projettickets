@@ -75,6 +75,67 @@ function AdminStadiumDetail() {
         console.error('Error deleting stadium:', error);
       });
   };
+  const [doors, setDoors] = useState([]); // State to manage doors data
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/stade/${stadiumId}`)
+      .then(response => {
+        setStadium(response.data);
+        setFormData(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching stadium:', error);
+      });
+
+    // Fetch doors data from the server
+    axios.get(`http://localhost:5000/api/stade/${stadiumId}/doors`)
+      .then(response => {
+        setDoors(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching doors:', error);
+      });
+  }, [stadiumId]);
+  const [newDoorName, setNewDoorName] = useState('');
+
+  const handleAddDoor = () => {
+    axios.post(`http://localhost:5000/api/stade/${stadiumId}/doors`, { doorName: newDoorName, crowdLevel: 0 })
+      .then(response => {
+        setDoors([...doors, response.data]);
+        // Clear the input field after adding the door
+        setNewDoorName('');
+      })
+      .catch(error => {
+        console.error('Error adding door:', error);
+      });
+  };
+  // Function to handle deleting a door
+  const handleDeleteDoor = (doorId) => {
+    axios.delete(`http://localhost:5000/api/stade/${stadiumId}/doors/${doorId}`)
+      .then(() => {
+        setDoors(doors.filter(door => door._id !== doorId));
+      })
+      .catch(error => {
+        console.error('Error deleting door:', error);
+      });
+  };
+  const [editedDoorName, setEditedDoorName] = useState('');
+
+  // Function to handle updating a door name
+  const handleEditDoorName = (doorId) => {
+    axios.patch(`http://localhost:5000/api/stade/${stadiumId}/doors/${doorId}`, { doorName: editedDoorName })
+      .then(response => {
+        const updatedDoors = doors.map(door =>
+          door._id === doorId ? { ...door, doorName: response.data.doorName } : door
+        );
+        setDoors(updatedDoors);
+        // Clear the edited door name after updating
+        setEditedDoorName('');
+      })
+      .catch(error => {
+        console.error('Error updating door:', error);
+      });
+  };
 
   if (!stadium) {
     return <div>Loading...</div>;
@@ -92,10 +153,7 @@ function AdminStadiumDetail() {
           Location:
           <input type="text" name="location" value={formData.location} onChange={handleInputChange} />
         </label>
-        <label>
-          image:
-          <input type="text" name="path" value={formData.path} onChange={handleInputChange} />
-        </label>
+       
         <div className="categories">
           <h3>Categories</h3>
           {formData.categories.map((category, index) => (
@@ -127,7 +185,7 @@ function AdminStadiumDetail() {
                   onChange={(e) => handleCategoryChange(index, 'price', e.target.value)}
                 />
               </label><br></br>
-              <button type="button" onClick={() => handleDeleteCategory(index)} style={{width:"fit-content"}}>Delete Category</button>
+              <button type="button" onClick={() => handleDeleteCategory(index)} style={{width:"fit-content", backgroundColor: '#cd2828' }}>Delete Category</button>
             </div>
             
           ))}
@@ -136,7 +194,34 @@ function AdminStadiumDetail() {
           <button type="button" onClick={handleAddCategory} >Add Category</button>
         </div>
       </form>                      <br></br>
-
+      <div className="doors">
+        <h3>Doors</h3>
+        {doors.map(door => (
+          <div key={door._id} className="door-item">
+            <br/>
+            <label>Door name</label>
+              <input
+              type="text"
+              placeholder={door.doorName}
+              value={editedDoorName}
+              onChange={(e) => setEditedDoorName(e.target.value)}
+            />
+            {/* Button to submit the edited door name */}
+            <button style={{width:"fit-content"}} onClick={() => handleEditDoorName(door._id)}>Update</button>
+            {/* Button to delete the door */}
+            <button  style={{width:"fit-content", backgroundColor: '#cd2828' }} onClick={() => handleDeleteDoor(door._id)}>Delete</button>
+          </div>
+        ))}
+   <div><br/>
+   <label>New door</label>
+          <input
+            type="text"
+            placeholder="Enter door name"
+            value={newDoorName}
+            onChange={(e) => setNewDoorName(e.target.value)}
+          />
+          <button  style={{width:"fit-content"}}  onClick={handleAddDoor}>Add Door</button>
+        </div>      </div>
       <button onClick={handleUpdate} style={{ backgroundColor: '#198754' }}>Update Stadium</button>
       <br></br>
 

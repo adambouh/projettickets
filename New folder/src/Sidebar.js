@@ -1,14 +1,25 @@
 // src/Sidebar.js
+
 import React from 'react';
-import { Link } from 'react-router-dom';
-import './css/Sidebar.css'; 
+import { Link , useNavigate} from 'react-router-dom';
+import './css/Sidebar.css';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
+  const navigate=useNavigate();
   const handleCloseClick = (e) => {
     e.preventDefault();
     toggleSidebar();
   };
-  const isAdmin= localStorage.getItem("role")=="admin";
+
+  const handleLogout = () => {
+    // Clear local storage
+    localStorage.clear();
+    // Redirect to the home page
+    navigate("/");
+  };
+
+  const isAdmin = localStorage.getItem("role") === "admin";
+
   return (
     <div id="mySidenav" className={`sidenav ${isOpen ? 'open' : ''}`}>
       <a href="#" className="closebtn" onClick={handleCloseClick}>&times;</a>
@@ -20,9 +31,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           <Link to="/admin/matches" onClick={toggleSidebar}>Matches</Link>
         </>
       )}
+            <a href="/" className="logout-btn" style={{  color: "#c43030"}} onClick={() => { localStorage.clear(); toggleSidebar(); }}>Déconnexion</a>
+
     </div>
   );
 };
-/*      <-- <Link to="/DoorsPage" onClick={toggleSidebar}>Doors</Link>-->
-*/
+
 export default Sidebar;

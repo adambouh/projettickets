@@ -1,62 +1,46 @@
 const mongoose = require('mongoose');
-const axios = require('axios');
-const Match = require('./match');
-const Stade = require('./stade'); // Assuming the Stade model is defined in this file
+const Door = require('./Door'); // Assuming door model is in models folder
 
-// Function to convert date string to Date object
-function parseDate(dateString) {
-  return new Date(dateString);
-}
+// MongoDB connection
+mongoose.connect('mongodb://localhost:27017/stadium', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 
-// Function to fetch data from the provided URL
-async function fetchData(url) {
-  try {
-    const response = await axios.get(url);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return null;
-  }
-}
+const doorsData = [
+    { doorName: "Porte A", crowdLevel: 10 },
+    { doorName: "Porte B", crowdLevel: 20 },
+    { doorName: "Porte C", crowdLevel: 30 },
+    { doorName: "Porte D", crowdLevel: 40 }
+];
 
-// Function to create Match instances from JSON data
-async function createMatches() {
-  try {
-    await mongoose.connect('mongodb://localhost:27017/stadium', { useNewUrlParser: true, useUnifiedTopology: true });
-    console.log('Connected to MongoDB');
+const stadiumIds = [
+    '665f97c0f9987f907233e733',
+    '665f97c0f9987f907233e738',
+    '665f97c0f9987f907233e73d',
+    '665f97c0f9987f907233e742',
+    '665f97c0f9987f907233e747'
+];
 
-    const matchesData = await fetchData('https://worldcupjson.net/matches');
-    if (!matchesData) return;
+const addDoorsToStadium = async (stadiumId) => {
+    const doors = doorsData.map(door => ({
+        ...door,
+        stadiumId
+    }));
 
-    // Example: Assume you have stadiums stored in your database, fetch one for the example
-    const stadiums = await Stade.find(); // Retrieve all stadiums
-    if (stadiums.length === 0) {
-      console.error('No stadiums found in the database.');
-      return;
+    try {
+        await Door.insertMany(doors);
+        console.log(`Doors added to stadium ${stadiumId}`);
+    } catch (error) {
+        console.error(`Error adding doors to stadium ${stadiumId}:`, error);
     }
+};
 
-    for (const matchData of matchesData) {
-      // Select a random stadium for demonstration purposes
-      const randomStadium = stadiums[Math.floor(Math.random() * stadiums.length)];
-
-      const match = new Match({
-        name: `${matchData.home_team.country} vs ${matchData.away_team.country}`,
-        home_team_country: matchData.home_team.country,
-        away_team_country: matchData.away_team.country,
-        date: parseDate(matchData.datetime),
-        stade: randomStadium._id // Use the stadium ObjectId
-      });
-
-      await match.save();
-      console.log(`Match saved: ${match.name}`);
+const run = async () => {
+    for (const stadiumId of stadiumIds) {
+        await addDoorsToStadium(stadiumId);
     }
+    mongoose.connection.close();
+};
 
-    mongoose.disconnect();
-    console.log('Disconnected from MongoDB');
-  } catch (error) {
-    console.error('Error:', error);
-    mongoose.disconnect();
-  }
-}
-
-createMatches();
+run();
